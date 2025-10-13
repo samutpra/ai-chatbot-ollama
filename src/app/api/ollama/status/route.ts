@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // ทดสอบการเชื่อมต่อกับ Ollama
     const ollamaUrl = process.env.OLLAMA_URL || 'http://localhost:11434';

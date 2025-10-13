@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Download, Settings } from 'lucide-react';
+import { Download } from 'lucide-react';
 
-export type ModelType = 
+export type ModelType =
   | 'gpt-oss:20b'
   | 'llama3.2:latest'
   | 'gemma3:27b'
@@ -22,6 +22,13 @@ interface ModelInfo {
   name: string;
   description: string;
   size: string;
+}
+
+interface OllamaModel {
+  name: string;
+  model?: string;
+  modified_at?: string;
+  size?: number;
 }
 
 const defaultModels: ModelInfo[] = [
@@ -61,7 +68,7 @@ export const ModelSelector = ({ selectedModel, onModelChange, disabled }: ModelS
         const response = await fetch('/api/models');
         if (response.ok) {
           const data = await response.json();
-          const modelNames = data.models?.map((model: any) => model.name) || [];
+          const modelNames = data.models?.map((model: OllamaModel) => model.name) || [];
           setAvailableModels(modelNames);
         }
       } catch (error) {

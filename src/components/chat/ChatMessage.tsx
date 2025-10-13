@@ -35,7 +35,7 @@ const highlightJSON = (text: string) => {
     const formatted = JSON.stringify(parsed, null, 2);
     
     return formatted.split('\n').map((line, index) => {
-      const indent = line.match(/^\s*/)[0];
+      const indent = line.match(/^\s*/)?.[0] ?? '';
       const content = line.replace(/^\s*/, '');
       
       if (content === '') return <div key={index} className="h-4"></div>;

@@ -5,6 +5,22 @@ import { ChatSession, Message } from '@/types/chat';
 const dbPath = path.join(process.cwd(), 'chat_history.db');
 const db = new Database(dbPath);
 
+// Database row types
+interface SessionRow {
+  id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface MessageRow {
+  id: string;
+  session_id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  image_url: string | null;
+  timestamp: string;
+}
+
 // สร้างตารางถ้ายังไม่มี
 const initDatabase = () => {
   // ตารางสำหรับเก็บ chat sessions
@@ -61,14 +77,18 @@ export const databaseService = {
       INSERT INTO messages (id, session_id, role, content, image_url, timestamp)
       VALUES (?, ?, ?, ?, ?, ?)
     `);
-    
+
+    const timestamp = message.timestamp instanceof Date
+      ? message.timestamp.toISOString()
+      : new Date(message.timestamp).toISOString();
+
     stmt.run(
       message.id,
       sessionId,
       message.role,
       message.content,
       message.imageUrl || null,
-      message.timestamp.toISOString()
+      timestamp
     );
 
     // อัปเดต updated_at ของ session
@@ -83,25 +103,25 @@ export const databaseService = {
     const sessionStmt = db.prepare(`
       SELECT id, created_at, updated_at FROM chat_sessions WHERE id = ?
     `);
-    const session = sessionStmt.get(sessionId) as any;
+    const session = sessionStmt.get(sessionId) as SessionRow | undefined;
 
     if (!session) return null;
 
     const messagesStmt = db.prepare(`
-      SELECT id, role, content, image_url, timestamp 
-      FROM messages 
-      WHERE session_id = ? 
+      SELECT id, role, content, image_url, timestamp
+      FROM messages
+      WHERE session_id = ?
       ORDER BY timestamp ASC
     `);
-    const messages = messagesStmt.all(sessionId) as any[];
+    const messages = messagesStmt.all(sessionId) as MessageRow[];
 
     return {
       id: session.id,
       messages: messages.map(msg => ({
         id: msg.id,
-        role: msg.role as 'user' | 'assistant',
+        role: msg.role,
         content: msg.content,
-        imageUrl: msg.image_url,
+        imageUrl: msg.image_url ?? undefined,
         timestamp: new Date(msg.timestamp)
       })),
       createdAt: new Date(session.created_at),
@@ -112,11 +132,11 @@ export const databaseService = {
   // ดึงรายการ sessions ทั้งหมด
   getAllSessions: (): ChatSession[] => {
     const sessionsStmt = db.prepare(`
-      SELECT id, created_at, updated_at 
-      FROM chat_sessions 
+      SELECT id, created_at, updated_at
+      FROM chat_sessions
       ORDER BY updated_at DESC
     `);
-    const sessions = sessionsStmt.all() as any[];
+    const sessions = sessionsStmt.all() as SessionRow[];
 
     return sessions.map(session => ({
       id: session.id,

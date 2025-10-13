@@ -18,7 +18,7 @@ interface RequestBody {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { messages, model = 'llama3.2', sessionId }: RequestBody = body;
+    const { messages, model = 'llama3.2' }: RequestBody = body;
 
     // แปลงรูปภาพให้เป็น base64 ที่ถูกต้อง
     const processedMessages = messages.map(msg => {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
           return imageUrl;
         }
         return null;
-      }).filter(Boolean) || [];
+      }).filter((img): img is string => img !== null) || [];
 
       return {
         role: msg.role,

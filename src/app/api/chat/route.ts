@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
           return imageUrl;
         }
         return null;
-      }).filter(Boolean) || [];
+      }).filter((img): img is string => img !== null) || [];
 
       return {
         role: msg.role,

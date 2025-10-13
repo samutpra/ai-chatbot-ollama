@@ -4,11 +4,12 @@ import { databaseService } from '@/lib/database';
 // GET: ดึง session เฉพาะ
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = databaseService.getSession(params.id);
-    
+    const { id } = await params;
+    const session = databaseService.getSession(id);
+
     if (!session) {
       return NextResponse.json(
         { error: 'Session not found' },
@@ -29,10 +30,11 @@ export async function GET(
 // DELETE: ลบ session
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    databaseService.deleteSession(params.id);
+    const { id } = await params;
+    databaseService.deleteSession(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting session:', error);
