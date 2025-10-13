@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #0f1419;
+    --card: #f7f8f8;
+    --card-foreground: #0f1419;
+    --popover: #ffffff;
+    --popover-foreground: #0f1419;
+    --primary: #1e9df1;
+    --primary-foreground: #ffffff;
+    --secondary: #0f1419;
+    --secondary-foreground: #ffffff;
+    --muted: #e5e5e6;
+    --muted-foreground: #0f1419;
+    --accent: #e3ecf6;
+    --accent-foreground: #1e9df1;
+    --destructive: #f4212e;
+    --destructive-foreground: #ffffff;
+    --border: #e1eaef;
+    --input: #f7f9fa;
+    --ring: #1da1f2;
+    --chart-1: #1e9df1;
+    --chart-2: #00b87a;
+    --chart-3: #f7b928;
+    --chart-4: #17bf63;
+    --chart-5: #e0245e;
+    --sidebar: #f7f8f8;
+    --sidebar-foreground: #0f1419;
+    --sidebar-primary: #1e9df1;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e3ecf6;
+    --sidebar-accent-foreground: #1e9df1;
+    --sidebar-border: #e1e8ed;
+    --sidebar-ring: #1da1f2;
+    --font-sans: Open Sans, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: Menlo, monospace;
+    --radius: 0.25rem;
+    --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+    
+    /* LM Studio inspired colors */
+    --lm-primary: 262 83% 58%;
+    --lm-success: 142 76% 36%;
+    --lm-warning: 38 92% 50%;
+    --lm-error: 0 84% 60%;
+    --lm-info: 199 89% 48%;
+    
+    /* JSON syntax highlighting */
+    --json-key: 15 100% 50%;
+    --json-string: 199 89% 48%;
+    --json-number: 199 89% 48%;
+    --json-boolean: 142 76% 36%;
+    --json-null: 0 0% 45%;
+  }
+
+  .dark {
+    --background: #000000;
+    --foreground: #e7e9ea;
+    --card: #17181c;
+    --card-foreground: #d9d9d9;
+    --popover: #000000;
+    --popover-foreground: #e7e9ea;
+    --primary: #1c9cf0;
+    --primary-foreground: #ffffff;
+    --secondary: #f0f3f4;
+    --secondary-foreground: #0f1419;
+    --muted: #181818;
+    --muted-foreground: #72767a;
+    --accent: #061622;
+    --accent-foreground: #1c9cf0;
+    --destructive: #f4212e;
+    --destructive-foreground: #ffffff;
+    --border: #242628;
+    --input: #22303c;
+    --ring: #1da1f2;
+    --chart-1: #1e9df1;
+    --chart-2: #00b87a;
+    --chart-3: #f7b928;
+    --chart-4: #17bf63;
+    --chart-5: #e0245e;
+    --sidebar: #17181c;
+    --sidebar-foreground: #d9d9d9;
+    --sidebar-primary: #1da1f2;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #061622;
+    --sidebar-accent-foreground: #1c9cf0;
+    --sidebar-border: #38444d;
+    --sidebar-ring: #1da1f2;
+    --font-sans: Open Sans, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: Menlo, monospace;
+    --radius: 0.25rem;
+    --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+    
+    /* LM Studio inspired colors - dark */
+    --lm-primary: 262 83% 58%;
+    --lm-success: 142 76% 36%;
+    --lm-warning: 38 92% 50%;
+    --lm-error: 0 84% 60%;
+    --lm-info: 199 89% 48%;
+    
+    /* JSON syntax highlighting - dark */
+    --json-key: 15 100% 60%;
+    --json-string: 199 89% 58%;
+    --json-number: 199 89% 58%;
+    --json-boolean: 142 76% 46%;
+    --json-null: 0 0% 65%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  /* LM Studio inspired utilities */
+  .lm-gradient {
+    background: linear-gradient(135deg, hsl(var(--lm-primary)) 0%, hsl(var(--lm-info)) 100%);
+  }
+  
+  .lm-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .lm-shadow {
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .lm-border {
+    border: 1px solid hsl(var(--border));
+  }
+  
+  /* JSON syntax highlighting */
+  .json-key {
+    color: hsl(var(--json-key));
+  }
+  
+  .json-string {
+    color: hsl(var(--json-string));
+  }
+  
+  .json-number {
+    color: hsl(var(--json-number));
+  }
+  
+  .json-boolean {
+    color: hsl(var(--json-boolean));
+  }
+  
+  .json-null {
+    color: hsl(var(--json-null));
+  }
+  
+  /* Status indicators */
+  .status-success {
+    color: hsl(var(--lm-success));
+  }
+  
+  .status-warning {
+    color: hsl(var(--lm-warning));
+  }
+  
+  .status-error {
+    color: hsl(var(--lm-error));
+  }
+  
+  .status-info {
+    color: hsl(var(--lm-info));
+  }
+}
