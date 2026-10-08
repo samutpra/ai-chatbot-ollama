@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+
+// Extension comes from this whitelist, never from the client's filename,
+// so an upload can't escape public/uploads or be served as HTML/SVG.
+const IMAGE_EXTENSIONS: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,9 +25,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    const extension = IMAGE_EXTENSIONS[file.type];
+    if (!extension) {
       return NextResponse.json(
-        { error: 'Only image files are allowed' },
+        { error: 'Only PNG, JPEG, GIF or WebP images are allowed' },
         { status: 400 }
       );
     }
@@ -35,14 +46,17 @@ export async function POST(request: NextRequest) {
 
     // Create uploads directory if it doesn't exist
     const uploadsDir = join(process.cwd(), 'public', 'uploads');
-    await writeFile(join(uploadsDir, file.name), buffer);
+    await mkdir(uploadsDir, { recursive: true });
 
-    const imageUrl = `/uploads/${file.name}`;
+    const filename = `${uuidv4()}.${extension}`;
+    await writeFile(join(uploadsDir, filename), buffer);
+
+    const imageUrl = `/uploads/${filename}`;
 
     return NextResponse.json({ 
       success: true, 
       imageUrl,
-      filename: file.name 
+      filename 
     });
 
   } catch (error) {
